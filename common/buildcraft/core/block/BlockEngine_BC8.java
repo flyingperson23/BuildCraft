@@ -17,8 +17,11 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class BlockEngine_BC8 extends BlockEngineBase_BC8<EnumEngineType> {
     public BlockEngine_BC8(Material material, String id) {
@@ -38,6 +41,16 @@ public class BlockEngine_BC8 extends BlockEngineBase_BC8<EnumEngineType> {
     @Override
     public String getUnlocalizedName(EnumEngineType engine) {
         return TagManager.getTag("block.engine.bc." + engine.unlocalizedTag, EnumTagType.UNLOCALIZED_NAME);
+    }
+
+    @Override
+    public boolean addHitEffects(IBlockState state, World worldObj, RayTraceResult target, net.minecraft.client.particle.ParticleManager manager) {
+        return true;
+    }
+
+    @Override
+    public boolean addDestroyEffects(World world, BlockPos pos, net.minecraft.client.particle.ParticleManager manager) {
+        return true;
     }
 
     @Override
