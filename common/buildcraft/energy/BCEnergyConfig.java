@@ -99,7 +99,7 @@ public class BCEnergyConfig {
         propEnableOilGeneration = BCCoreConfig.config.get("worldgen.oil", "enable", true,
             "Should any oil sprouts or lakes be generated at all?");
         propEnableOilBurn = BCCoreConfig.config.get("worldgen.oil", "can_burn", true, "Can oil blocks burn?");
-        propOilIsSticky = BCCoreConfig.config.get("general","oilIsDense", false, "Should oil be dense and drag entities down?");
+        propOilIsSticky = BCCoreConfig.config.get("general","oilIsDense", true, "Should oil be sticky and drag entities down?");
 
         propOilWellGenerationRate =
             BCCoreConfig.config.get("worldgen.oil", "generationRate", 1.0, "The rate of occurrence of oil wells.");
@@ -179,6 +179,7 @@ public class BCEnergyConfig {
         propChristmasEventType =
             BCCoreConfig.config.get("events", "christmas_chocolate", SpecialEventType.DAY_ONLY.lowerCaseName);
         ConfigUtil.setEnumProperty(propChristmasEventType, SpecialEventType.values());
+        propChristmasEventType.setComment("Christmas");
         game.setTo(propChristmasEventType);
 
         // Move old configs

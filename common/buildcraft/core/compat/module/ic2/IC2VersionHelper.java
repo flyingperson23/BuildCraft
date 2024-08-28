@@ -12,18 +12,26 @@ import java.util.Collection;
 
 public class IC2VersionHelper {
     public static void addExternalTriggers(Collection<ITriggerExternal> res, @Nonnull EnumFacing side, TileEntity tile) {
+        Class<?> clazz = null;
         try {
-            ClassicImport.get();
-            ClIC2Statements.addTriggers(res, side, tile);
-        } catch (Exception ignored) {
+            clazz = Class.forName("ic2/core/platform/lang/components/base/LocaleComp");
+        } catch (ClassNotFoundException e) {}
+
+        if (clazz == null) {
             ExpIC2Statements.addTriggers(res, side, tile);
+        } else {
+            ClIC2Statements.addTriggers(res, side, tile);
         }
+
     }
 
     public static void addExternalActions(Collection<IActionExternal> res, @Nonnull EnumFacing side, TileEntity tile) {
+        Class<?> clazz = null;
         try {
-            ClassicImport.get();
-        } catch (Exception ignored) {
+            clazz = Class.forName("ic2/core/platform/lang/components/base/LocaleComp");
+        } catch (ClassNotFoundException e) {}
+
+        if (clazz == null) {
             ExpIC2Statements.addActions(res, side, tile);
         }
     }

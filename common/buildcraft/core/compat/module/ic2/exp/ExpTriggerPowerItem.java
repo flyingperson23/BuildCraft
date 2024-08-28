@@ -88,8 +88,8 @@ public class ExpTriggerPowerItem extends BCStatement implements ITriggerExternal
                 double ratio = charge / max;
                 if (max != 0) {
                     if (id == 0 && ratio == 1) return true;
-                    if (id == 1 && ratio <= 0.1) return true;
-                    if (id == 2 && ratio >= 0.9) return true;
+                    if (id == 1 && ratio <= 0.05) return true;
+                    if (id == 2 && ratio >= 0.95) return true;
                 }
             } else {
                 double charge = ElectricItem.manager.getCharge(block.dischargeSlot.get());
@@ -97,8 +97,8 @@ public class ExpTriggerPowerItem extends BCStatement implements ITriggerExternal
                 double ratio = charge / max;
                 if (max != 0) {
                     if (id == 0 && ratio == 0) return true;
-                    if (id == 1 && ratio <= 0.1) return true;
-                    if (id == 2 && ratio >= 0.9) return true;
+                    if (id == 1 && ratio <= 0.05) return true;
+                    if (id == 2 && ratio >= 0.95) return true;
                 }
             }
         } else {
@@ -112,8 +112,8 @@ public class ExpTriggerPowerItem extends BCStatement implements ITriggerExternal
                             double ratio = charge / max;
                             if (max != 0) {
                                 if (id == 0 && ratio == 1) return true;
-                                if (id == 1 && ratio <= 0.1) return true;
-                                if (id == 2 && ratio >= 0.9) return true;
+                                if (id == 1 && ratio <= 0.05) return true;
+                                if (id == 2 && ratio >= 0.95) return true;
                             }
                         } else if (slot instanceof IDischargingSlot && !charging) {
                             double charge = ElectricItem.manager.getCharge(slot.get());
@@ -121,8 +121,8 @@ public class ExpTriggerPowerItem extends BCStatement implements ITriggerExternal
                             double ratio = charge / max;
                             if (max != 0) {
                                 if (id == 0 && ratio == 0) return true;
-                                if (id == 1 && ratio <= 0.1) return true;
-                                if (id == 2 && ratio >= 0.9) return true;
+                                if (id == 1 && ratio <= 0.05) return true;
+                                if (id == 2 && ratio >= 0.95) return true;
                             }
                         }
                     }

@@ -47,7 +47,7 @@ public class BCBuildersConfig {
         EnumRestartRequirement none = EnumRestartRequirement.NONE;
         EnumRestartRequirement game = EnumRestartRequirement.GAME;
 
-        propBptStoreExternalThreshold = BCCoreConfig.config.get("general", "bptStoreExternalThreshold", 20_000);
+        propBptStoreExternalThreshold = BCCoreConfig.config.get("general", "bptStoreExternalThreshold", 20_000, "Blueprint store threshold - not used");
         none.setTo(propBptStoreExternalThreshold);
 
         propQuarryFrameMinHeight = BCCoreConfig.config.get("general", "quarryFrameMinHeight", 4);

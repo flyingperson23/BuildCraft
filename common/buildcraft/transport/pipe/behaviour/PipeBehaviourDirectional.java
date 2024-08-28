@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.annotation.Nullable;
 
+import buildcraft.transport.BCTransportConfig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -73,7 +74,16 @@ public abstract class PipeBehaviourDirectional extends PipeBehaviour {
     @Override
     public boolean onPipeActivate(EntityPlayer player, RayTraceResult trace, float hitX, float hitY, float hitZ,
         EnumPipePart part) {
-        if (player.isSneaking()) {
+        if (player.isSneaking() && BCTransportConfig.pipeRightClick) {
+            if (part == EnumPipePart.CENTER) {
+                return advanceFacing();
+            } else if (part.face != getCurrentDir() && canFaceDirection(part.face)) {
+                setCurrentDir(part.face);
+            }
+            return true;
+        }
+        if (EntityUtil.getWrenchHand(player) != null && BCTransportConfig.pipeWrench) {
+            EntityUtil.activateWrench(player, trace);
             if (part == EnumPipePart.CENTER) {
                 return advanceFacing();
             } else if (part.face != getCurrentDir() && canFaceDirection(part.face)) {

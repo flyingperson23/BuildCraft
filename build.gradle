@@ -32,17 +32,17 @@ buildscript {
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath "org.ajoberstar:grgit:2.2.1"
+        //classpath "org.ajoberstar:grgit:2.2.1"
     }
 }
 
 apply plugin: "net.minecraftforge.gradle.forge" // adds the forge dependency
 apply plugin: 'maven' // for uploading to a maven repo
 apply plugin: 'maven-publish' // for uploading to a maven repo
-if (!hasProperty("grgit")) {
+//if (!hasProperty("grgit")) {
     // As otherwise it logs a warning as grgit gets applied twice
-    apply plugin: "org.ajoberstar.grgit"
-}
+//    apply plugin: "org.ajoberstar.grgit"
+//}
 
 if (gradle.startParameter.taskNames.contains("checkstyle")) {
     apply plugin: "checkstyle"
@@ -118,7 +118,7 @@ dependencies {
 
     deobfCompile "CraftTweaker2:CraftTweaker2-API:${config.crafttweaker_version}"
     deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${config.crafttweaker_version}"
-    deobfCompile "curse.maven:ic2-classic-242942:5554368"
+    compileOnly "curse.maven:ic2-classic-242942:5554368"
 }
 
 minecraft {
@@ -133,36 +133,38 @@ minecraft {
     mappings = config.mappings_version
     // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
 
-    def addVersionDetails = !Boolean.getBoolean("release")
+    //def addVersionDetails = !Boolean.getBoolean("release")
+
+    //def addVersionDetails = false
 
     // Git versioning stuffs
-    if (grgit != null) {
-        String gitDir;
-        if (rootProject == project) {
-            gitDir = "$projectDir";
-        } else {
-            File dotGit = project.file(".git");
-            if (dotGit.isDirectory()) {
-                gitDir = dotGit;
-            } else {
-                gitDir = rootProject.file(".git/modules/BuildCraft").toString()
-            }
-        }
-        def repo = grgit.open(dir: gitDir)
-        replace "\${git_commit_hash}", repo.head().id
+    //if (grgit != null) {
+    //    String gitDir;
+    //    if (rootProject == project) {
+    //        gitDir = "$projectDir";
+    //    } else {
+    //        File dotGit = project.file(".git");
+    //        if (dotGit.isDirectory()) {
+    //            gitDir = dotGit;
+    //        } else {
+    //            gitDir = rootProject.file(".git/modules/BuildCraft").toString()
+    //        }
+    //    }
+    //    def repo = grgit.open(dir: gitDir)
+    //    replace "\${git_commit_hash}", repo.head().id
         // This is very ugly: we need 7(!) \ to produce a single \ in the final one. 
-        replace "\${git_commit_msg}", repo.head().fullMessage.replace("\"", "\\\\\\\"").split("\n")[0]
-        replace "\${git_commit_author}", repo.head().author.name
-        replace "\${git_branch}", repo.branch.current().getName()
-        if (addVersionDetails) {
+    //    replace "\${git_commit_msg}", repo.head().fullMessage.replace("\"", "\\\\\\\"").split("\n")[0]
+    //    replace "\${git_commit_author}", repo.head().author.name
+    //    replace "\${git_branch}", repo.branch.current().getName()
+    //    if (addVersionDetails) {
             // Always use the compat commit for the version.
-            project.version += "-" + grgit.open(dir: project.rootDir).head().id.toString().substring(0, 12)
-        }
-    } else {
-        if (addVersionDetails) {
-            project.version += "-SNAPSHOT"
-        }
-    }
+            //project.version += "-" + grgit.open(dir: project.rootDir).head().id.toString().substring(0, 12)
+    //    }
+    //} else {
+    //    if (addVersionDetails) {
+            //project.version += "-SNAPSHOT"
+    //    }
+    //}
 
     // replacing stuff in the source
     replace "\$version", project.version
@@ -238,6 +240,7 @@ runClient.jvmArgs += "-Dbuildcraft.dev=true"
 for (String s :"-XX:+UseG1GC -Xmx8G -Xms2G -Dsun.rmi.dgc.server.gcInterval=2147483646 -XX:+UnlockExperimentalVMOptions -XX:G1NewSizePercent=20 -XX:G1ReservePercent=20 -XX:MaxGCPauseMillis=50 -XX:G1HeapRegionSize=32M".split(" ")) {
     runClient.jvmArgs += s
 }
+
 
 // Obfuscated Jar location
 ext.jarFile = zipTree(jar.archivePath)

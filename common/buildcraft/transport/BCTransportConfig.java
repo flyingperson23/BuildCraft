@@ -45,7 +45,11 @@ public class BCTransportConfig {
     public static int baseFlowRate = 10;
     public static boolean fluidPipeColourBorder;
     public static PowerLossMode lossMode = PowerLossMode.DEFAULT;
+    public static boolean pipeWrench = true;
+    public static boolean pipeRightClick = false;
 
+    private static Property propPipeWrench;
+    private static Property propPipeRightClick;
     private static Property propMjPerMillibucket;
     private static Property propMjPerItem;
     private static Property propBaseFlowRate;
@@ -56,20 +60,33 @@ public class BCTransportConfig {
         Configuration config = BCCoreConfig.config;
         propMjPerMillibucket = config.get("general", "pipes.mjPerMillibucket", (int) mjPerMillibucket)
             .setMinValue((int) MJ_REQ_MILLIBUCKET_MIN);
+        propMjPerMillibucket.setComment("Fluid pipe MJ per millibucket");
         EnumRestartRequirement.WORLD.setTo(propMjPerMillibucket);
 
         propMjPerItem = config.get("general", "pipes.mjPerItem", (int) mjPerItem).setMinValue((int) MJ_REQ_ITEM_MIN);
+        propMjPerItem.setComment("Item pipe MJ per item");
         EnumRestartRequirement.WORLD.setTo(propMjPerItem);
 
         propBaseFlowRate = config.get("general", "pipes.baseFluidRate", baseFlowRate).setMinValue(1).setMaxValue(40);
+        propBaseFlowRate.setComment("Fluid pipe base flow rate");
         EnumRestartRequirement.WORLD.setTo(propBaseFlowRate);
 
         propFluidPipeColourBorder = config.get("display", "pipes.fluidColourIsBorder", true);
+        propFluidPipeColourBorder.setComment("Fluid pipe border color?");
         EnumRestartRequirement.WORLD.setTo(propFluidPipeColourBorder);
 
         propLossMode = config.get("experimental", "kinesisLossMode", "lossless");
+        propLossMode.setComment("Lossless mode?");
         ConfigUtil.setEnumProperty(propLossMode, PowerLossMode.VALUES);
         EnumRestartRequirement.WORLD.setTo(propLossMode);
+
+        propPipeWrench = config.get("general", "pipes.wrenchRotate", true);
+        propPipeWrench.setComment("Should a wrench be able to rotate directional pipes?");
+        EnumRestartRequirement.WORLD.setTo(propPipeWrench);
+
+        propPipeRightClick = config.get("general", "pipes.rightClickRotate", false);
+        propPipeRightClick.setComment("Should shift right clicking be able to rotate directional pipes?");
+        EnumRestartRequirement.WORLD.setTo(propPipeRightClick);
 
         MinecraftForge.EVENT_BUS.register(BCTransportConfig.class);
     }
@@ -94,6 +111,9 @@ public class BCTransportConfig {
                 fluidPipeColourBorder ? EnumPipeColourType.BORDER_INNER : EnumPipeColourType.TRANSLUCENT;
 
             lossMode = ConfigUtil.parseEnumForConfig(propLossMode, PowerLossMode.DEFAULT);
+
+            pipeWrench = propPipeWrench.getBoolean();
+            pipeRightClick = propPipeRightClick.getBoolean();
 
             fluidTransfer(BCTransportPipes.cobbleFluid, baseFlowRate, 10);
             fluidTransfer(BCTransportPipes.woodFluid, baseFlowRate, 10);

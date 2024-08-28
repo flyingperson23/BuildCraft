@@ -8,18 +8,11 @@ import buildcraft.core.BCCoreSprites;
 import buildcraft.core.statements.BCStatement;
 import buildcraft.lib.client.sprite.SpriteHolderRegistry;
 import buildcraft.lib.misc.LocaleUtil;
-import ic2.api.classic.tile.machine.IEUStorage;
 import ic2.api.item.ElectricItem;
 import ic2.core.block.base.tile.TileEntityElectricBlock;
-import ic2.core.inventory.management.IHasHandler;
-import ic2.core.inventory.management.InventoryHandler;
-import ic2.core.inventory.management.SlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import net.minecraftforge.items.CapabilityItemHandler;
-
-import java.util.List;
 
 public class ClTriggerPowerItem extends BCStatement implements ITriggerExternal {
     private final boolean charging;
@@ -60,8 +53,8 @@ public class ClTriggerPowerItem extends BCStatement implements ITriggerExternal 
             if (max != 0) {
                 if (charging && id == 0 && ratio == 1) return true;
                 if (!charging && id == 0 && ratio == 0) return true;
-                if (id == 1 && ratio <= 0.1) return true;
-                if (id == 2 && ratio >= 0.9) return true;
+                if (id == 1 && ratio <= 0.05) return true;
+                if (id == 2 && ratio >= 0.95) return true;
             }
         }
 

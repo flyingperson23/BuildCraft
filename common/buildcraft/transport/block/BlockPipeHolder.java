@@ -722,7 +722,16 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
     @Override
     public boolean addLandingEffects(IBlockState state, WorldServer worldObj, BlockPos blockPosition,
         IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles) {
-        return super.addLandingEffects(state, worldObj, blockPosition, iblockstate, entity, numberOfParticles);
+
+
+
+        return true;
+        //return super.addLandingEffects(state, worldObj, blockPosition, iblockstate, entity, numberOfParticles);
+    }
+
+    @Override
+    public boolean addRunningEffects(IBlockState state, World world, BlockPos pos, Entity entity) {
+        return true;
     }
 
     private static HitSpriteInfo getHitSpriteInfo(RayTraceResult target, TilePipeHolder pipeHolder) {

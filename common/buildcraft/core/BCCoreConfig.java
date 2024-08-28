@@ -54,6 +54,7 @@ public class BCCoreConfig {
     public static int miningMaxDepth;
     public static int rfPerMj = 10;
     public static int autoWorkbenchMaxRFT = 40;
+    public static int pumpRFPerBlock = 100;
     private static Property propColourBlindMode;
     private static Property propWorldGen;
     private static Property propWorldGenWaterSpring;
@@ -82,6 +83,7 @@ public class BCCoreConfig {
     private static Property propMiningMultiplier;
     private static Property propMiningMaxDepth;
     private static Property propAutoWorkbenchMaxRFT;
+    private static Property propPumpRFPerBucket;
 
     public static void preInit(File cfgFolder) {
         configFolder = cfgFolder;
@@ -140,6 +142,7 @@ public class BCCoreConfig {
         none.setTo(propHideFluid);
 
         propGuideBookEnableDetail = config.get(display, "guideBookEnableDetail", false);
+        propGuideBookEnableDetail.setComment("Guide book detail?");
         none.setTo(propGuideBookEnableDetail);
 
         propGuideItemSearchLimit = config.get(performance, "guideItemSearchLimit", 10_000);
@@ -199,7 +202,7 @@ public class BCCoreConfig {
 
         propChunkLoadLevel =
             config.get(general, "chunkLoadLevel", ChunkLoaderLevel.SELF_TILES.name().toLowerCase(Locale.ROOT));
-        propChunkLoadLevel.setComment("");
+        propChunkLoadLevel.setComment("Chunk load level");
         ConfigUtil.setEnumProperty(propChunkLoadLevel, ChunkLoaderLevel.values());
         world.setTo(propChunkLoadLevel);
 
@@ -245,6 +248,11 @@ public class BCCoreConfig {
         propAutoWorkbenchMaxRFT.setMinValue(1).setMaxValue(400);
         propAutoWorkbenchMaxRFT.setComment("How much power in rf/t can the auto workbench receive");
         game.setTo(propAutoWorkbenchMaxRFT);
+
+        propPumpRFPerBucket = config.get(general, "pumpRfPerBucket", 100);
+        propPumpRFPerBucket.setMinValue(1).setMaxValue(1048576);
+        propPumpRFPerBucket.setComment("How much power a pump needs to pump 1 bucket");
+        game.setTo(propPumpRFPerBucket);
 
         reloadConfig(game);
         addReloadListener(BCCoreConfig::reloadConfig);
@@ -319,6 +327,7 @@ public class BCCoreConfig {
                 worldGenWaterSpring = propWorldGenWaterSpring.getBoolean();
                 BCLibConfig.useSwappableSprites = propUseSwappableSprites.getBoolean();
                 autoWorkbenchMaxRFT = propAutoWorkbenchMaxRFT.getInt();
+                pumpRFPerBlock = propPumpRFPerBucket.getInt();
             }
         }
         BCLibConfig.refreshConfigs();

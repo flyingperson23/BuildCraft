@@ -316,7 +316,7 @@ public class TilePump extends TileMiner {
         if (tank.getFluidAmount() > tank.getCapacity() / 2) {
             return;
         }
-        long target = 10 * MjAPI.MJ;
+        long target = BCCoreConfig.pumpRFPerBlock * MjAPI.MJ / MjAPI.rfPerMj;
         if (currentPos != null && paths.containsKey(currentPos)) {
             progress += battery.extractPower(0, target - progress);
             if (progress < target) {

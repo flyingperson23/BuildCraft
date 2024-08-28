@@ -60,6 +60,7 @@ public class BCCompat {
         String cModId = module.compatModId();
         if (module.canLoad()) {
             Property prop = BCCoreConfig.config.get("modules", cModId, true);
+            prop.setComment("Enable compat for "+cModId+"?");
             if (prop.getBoolean(true)) {
                 modules.put(cModId, module);
                 BCLog.logger.info("[compat]   + " + cModId);

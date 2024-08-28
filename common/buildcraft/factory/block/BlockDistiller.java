@@ -8,6 +8,8 @@ package buildcraft.factory.block;
 
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.BlockRenderLayer;
@@ -16,6 +18,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -59,5 +62,20 @@ public class BlockDistiller extends BlockBCTile_Neptune implements IBlockWithFac
     @SideOnly(Side.CLIENT)
     public BlockRenderLayer getBlockLayer() {
         return BlockRenderLayer.CUTOUT;
+    }
+
+    @Override
+    public boolean addLandingEffects(IBlockState state, WorldServer worldObj, BlockPos blockPosition,
+                                     IBlockState iblockstate, EntityLivingBase entity, int numberOfParticles) {
+
+
+
+        return true;
+        //return super.addLandingEffects(state, worldObj, blockPosition, iblockstate, entity, numberOfParticles);
+    }
+
+    @Override
+    public boolean addRunningEffects(IBlockState state, World world, BlockPos pos, Entity entity) {
+        return true;
     }
 }
