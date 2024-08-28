@@ -69,10 +69,30 @@ public class BCEnergy {
     }
 
     private static void registerMigrations() {
-        /** 7.99.0 */
-        // Fluid registration changed from "fluid_block_[FLUID]" to "fluid_block_heat_[HEAT]_[FLUID]"
-        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.oil.getBlock(), "fluid_block_oil");
-        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.fuel.getBlock(), "fluid_block_fuel");
+        /** 8.0.x */
+        // Unable to perform the following migrations because of an archaic Forge bug: https://github.com/MinecraftForge/MinecraftForge/issues/2768
+        /*
+        String[] oldOilNames = new String[5 * 3];
+        int pointer = 0;
+        for (String type : new String[] { "", "_residue", "_dense", "_distilled", "_heavy" }) {
+            for (int i = 0; i < 3; i++) {
+                oldOilNames[pointer++] = "fluid_block_oil" + type + "_heat_" + i;
+            }
+        }
+        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.oil.getBlock(), oldOilNames);
+        pointer = 0;
+        String[] oldFuelNames = new String[5 * 3];
+        for (String type : new String[] { "gaseous", "light", "mixed_light", "mixed_heavy", "dense" }) {
+            for (int i = 0; i < 3; i++) {
+                oldFuelNames[pointer++] = "fluid_block_fuel_" + type + "_heat_" + i;
+            }
+        }
+        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.fuel.getBlock(), oldFuelNames);
+         */
+
+        // Stopgap: Old default oil/fuel => new default oil/fuel
+        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.oil.getBlock(), "fluid_block_oil_heat_0");
+        MigrationManager.INSTANCE.addBlockMigration(BCEnergyFluids.fuel.getBlock(), "fluid_block_fuel_light_heat_0");
     }
 
     static {

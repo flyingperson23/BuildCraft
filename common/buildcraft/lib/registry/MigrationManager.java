@@ -62,7 +62,7 @@ public enum MigrationManager {
             blockMigrations.put(oldLowerCase, to);
             if (DEBUG) {
                 BCLog.logger
-                    .info("[lib.migrate] Adding item migration from " + oldLowerCase + " to " + to.getRegistryName());
+                    .info("[lib.migrate] Adding block migration from " + oldLowerCase + " to " + to.getRegistryName());
             }
         }
     }
