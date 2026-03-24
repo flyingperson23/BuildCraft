@@ -6,7 +6,6 @@ import buildcraft.core.statements.TriggerPower;
 import ic2.core.block.wiring.TileEntityElectricBlock;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
-import scala.actors.threadpool.Arrays;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -55,7 +54,7 @@ public class ExpIC2Statements {
 
     public static void addActions(Collection<IActionExternal> res, @Nonnull EnumFacing side, TileEntity tile) {
         if (ExpActionSetRedstoneMode.canActivate(tile)) {
-            res.addAll(Arrays.asList(REDSTONE_MODE));
+            res.addAll(java.util.Arrays.asList(REDSTONE_MODE));
         }
     }
 

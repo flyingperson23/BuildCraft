@@ -2,11 +2,14 @@ package buildcraft.core.compat.module.forestry;
 
 import buildcraft.api.BCModules;
 import buildcraft.api.core.BCLog;
+import buildcraft.api.fuels.BuildcraftFuelRegistry;
 import buildcraft.api.lists.ListRegistry;
 
 import buildcraft.core.compat.CompatModuleBase;
 import buildcraft.core.compat.module.forestry.list.ListMatchGenome;
 import buildcraft.core.compat.module.forestry.pipe.ForestryPipes;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidRegistry;
 
 public class CompatModuleForestry extends CompatModuleBase {
     @Override
@@ -19,6 +22,14 @@ public class CompatModuleForestry extends CompatModuleBase {
         ListRegistry.registerHandler(new ListMatchGenome());
         if (canLoadPropolisPipe()) {
             ForestryPipes.preInit();
+        }
+    }
+
+    @Override
+    public void init() {
+        Fluid ice = FluidRegistry.getFluid("ice");
+        if (ice != null) {
+            BuildcraftFuelRegistry.coolant.addCoolant(ice, 0.01f);
         }
     }
 

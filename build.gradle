@@ -21,6 +21,11 @@ buildscript {
         jcenter()
         maven {
             url = "http://files.minecraftforge.net/maven"
+            //url = "http://maven.minecraftforge.net/releases"
+        }
+        maven {
+            name = "forgeMavenReleases"
+            url = "https://maven.minecraftforge.net/releases"
         }
         maven {
             name = "sonatype"
@@ -102,22 +107,22 @@ dependencies {
 
     implementation("com.google.guava:guava:33.2.1-jre")
 
-    deobfCompile "curse.maven:jei-238222:5101347"
-    deobfCompile "curse.maven:the-one-probe-245211:2667280"
-    deobfCompile "curse.maven:hwyla-253449:2568751"
+    compile "curse.maven:jei-238222:5101347"
+    compile "curse.maven:the-one-probe-245211:2667280"
+    compile "curse.maven:hwyla-253449:2568751"
 
-    deobfCompile "curse.maven:mrtjpcore-229002:2735197"
-    deobfCompile "curse.maven:project-red-core-228702:2745545"
-    deobfCompile "curse.maven:project-red-expansion-229048:2745550"
-    deobfCompile "curse.maven:project-red-exploration-229049:2745551"
-    deobfCompile "curse.maven:project-red-fabrication-230111:2745547"
-    deobfCompile "curse.maven:project-red-integration-229045:2745548"
+    compile "curse.maven:mrtjpcore-229002:2735197"
+    compile "curse.maven:project-red-core-228702:2745545"
+    compile "curse.maven:project-red-expansion-229048:2745550"
+    compile "curse.maven:project-red-exploration-229049:2745551"
+    compile "curse.maven:project-red-fabrication-230111:2745547"
+    compile "curse.maven:project-red-integration-229045:2745548"
 
-    deobfCompile "curse.maven:forestry-59751:2684780"
-    deobfCompile "curse.maven:industrial-craft-242638:3838713"
+    compile "curse.maven:forestry-59751:2684780"
+    compile "curse.maven:industrial-craft-242638:3838713"
 
-    deobfCompile "CraftTweaker2:CraftTweaker2-API:${config.crafttweaker_version}"
-    deobfCompile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${config.crafttweaker_version}"
+    compile "CraftTweaker2:CraftTweaker2-API:${config.crafttweaker_version}"
+    compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${config.crafttweaker_version}"
     compileOnly "curse.maven:ic2-classic-242942:5554368"
 }
 

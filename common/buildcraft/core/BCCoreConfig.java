@@ -55,6 +55,7 @@ public class BCCoreConfig {
     public static int rfPerMj = 10;
     public static int autoWorkbenchMaxRFT = 40;
     public static int pumpRFPerBlock = 100;
+    public static boolean ic2exp = true;
     private static Property propColourBlindMode;
     private static Property propWorldGen;
     private static Property propWorldGenWaterSpring;
@@ -84,6 +85,7 @@ public class BCCoreConfig {
     private static Property propMiningMaxDepth;
     private static Property propAutoWorkbenchMaxRFT;
     private static Property propPumpRFPerBucket;
+    private static Property propIC2Version;
 
     public static void preInit(File cfgFolder) {
         configFolder = cfgFolder;
@@ -254,6 +256,10 @@ public class BCCoreConfig {
         propPumpRFPerBucket.setComment("How much power a pump needs to pump 1 bucket");
         game.setTo(propPumpRFPerBucket);
 
+        propIC2Version = config.get("modules", "ic2Version", true);
+        propIC2Version.setComment("IC2 version for compat module - true for experimental, false for classic");
+        game.setTo(propIC2Version);
+
         reloadConfig(game);
         addReloadListener(BCCoreConfig::reloadConfig);
 
@@ -314,6 +320,7 @@ public class BCCoreConfig {
         BCLibConfig.enableAnimatedSprites = propEnableAnimatedSprites.getBoolean();
         miningMultiplier = MathUtil.clamp(propMiningMultiplier.getDouble(), 1, 200);
         miningMaxDepth = propMiningMaxDepth.getInt();
+        ic2exp = propIC2Version.getBoolean();
 
 
         if (EnumRestartRequirement.WORLD.hasBeenRestarted(restarted)) {

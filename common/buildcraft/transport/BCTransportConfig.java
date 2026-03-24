@@ -42,11 +42,13 @@ public class BCTransportConfig {
 
     public static long mjPerMillibucket = 10_000;
     public static long mjPerItem = 100_000;
-    public static int baseFlowRate = 10;
+    public static int baseFlowRate = 50;
+    public static int basePowerRate = 80;
     public static boolean fluidPipeColourBorder;
     public static PowerLossMode lossMode = PowerLossMode.DEFAULT;
     public static boolean pipeWrench = true;
     public static boolean pipeRightClick = false;
+    public static int maxItemPerTick = 16;
 
     private static Property propPipeWrench;
     private static Property propPipeRightClick;
@@ -55,6 +57,8 @@ public class BCTransportConfig {
     private static Property propBaseFlowRate;
     private static Property propFluidPipeColourBorder;
     private static Property propLossMode;
+    private static Property propMaxItemPerTick;
+    private static Property propBasePowerRate;
 
     public static void preInit() {
         Configuration config = BCCoreConfig.config;
@@ -67,9 +71,17 @@ public class BCTransportConfig {
         propMjPerItem.setComment("Item pipe MJ per item");
         EnumRestartRequirement.WORLD.setTo(propMjPerItem);
 
-        propBaseFlowRate = config.get("general", "pipes.baseFluidRate", baseFlowRate).setMinValue(1).setMaxValue(40);
+        propBaseFlowRate = config.get("general", "pipes.baseFluidRate", baseFlowRate).setMinValue(1).setMaxValue(100);
         propBaseFlowRate.setComment("Fluid pipe base flow rate");
         EnumRestartRequirement.WORLD.setTo(propBaseFlowRate);
+
+        propMaxItemPerTick = config.get("general", "pipes.maxItemsPerTick", maxItemPerTick).setMinValue(1).setMaxValue(64);
+        propMaxItemPerTick.setComment("Max items a wooden pipe can extract every tick");
+        EnumRestartRequirement.WORLD.setTo(propMaxItemPerTick);
+
+        propBasePowerRate = config.get("general", "pipes.basePowerRate", basePowerRate).setMinValue(10).setMaxValue(1000);
+        propBasePowerRate.setComment("Power pipe base flow rate");
+        EnumRestartRequirement.WORLD.setTo(propBasePowerRate);
 
         propFluidPipeColourBorder = config.get("display", "pipes.fluidColourIsBorder", true);
         propFluidPipeColourBorder.setComment("Fluid pipe border color?");
@@ -104,7 +116,9 @@ public class BCTransportConfig {
                 mjPerItem = MJ_REQ_ITEM_MIN;
             }
 
-            baseFlowRate = MathUtil.clamp(propBaseFlowRate.getInt(), 1, 40);
+            baseFlowRate = MathUtil.clamp(propBaseFlowRate.getInt(), 1, 100);
+            maxItemPerTick = MathUtil.clamp(propMaxItemPerTick.getInt(), 1, 64);
+            basePowerRate = MathUtil.clamp(propBasePowerRate.getInt(), 10, 1000);
 
             fluidPipeColourBorder = propFluidPipeColourBorder.getBoolean();
             PipeApi.flowFluids.fallbackColourType =
@@ -130,15 +144,15 @@ public class BCTransportConfig {
             fluidTransfer(BCTransportPipes.goldFluid, baseFlowRate * 8, 2);
             fluidTransfer(BCTransportPipes.voidFluid, baseFlowRate * 8, 10);
 
-            powerTransfer(BCTransportPipes.cobblePower, 80, false);
-            powerTransfer(BCTransportPipes.stonePower, 160, false);
-            powerTransfer(BCTransportPipes.woodPower, 320, true);
-            powerTransfer(BCTransportPipes.sandstonePower, 320, false);
-            powerTransfer(BCTransportPipes.quartzPower, 640, false);
-            powerTransfer(BCTransportPipes.ironPower, 1280, false);
-            powerTransfer(BCTransportPipes.goldPower, 2560, false);
-            powerTransfer(BCTransportPipes.diamondPower, 10240, false);
-            powerTransfer(BCTransportPipes.emeraldPower, 2560, true);
+            powerTransfer(BCTransportPipes.cobblePower, basePowerRate, false);
+            powerTransfer(BCTransportPipes.stonePower, 2 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.woodPower, 4 * basePowerRate, true);
+            powerTransfer(BCTransportPipes.sandstonePower, 4 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.quartzPower, 8 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.ironPower, 16 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.goldPower, 32 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.diamondPower, 128 * basePowerRate, false);
+            powerTransfer(BCTransportPipes.emeraldPower, 64 * basePowerRate, true);
         }
     }
 

@@ -137,6 +137,15 @@ public class BlockPipeHolder extends BlockBCTile_Neptune implements ICustomPaint
     }
 
     // Collisions
+    @Override
+    @Deprecated
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        if (source.isAirBlock(pos)) {
+            // Permit placing pipes below when jumping
+            return BOX_CENTER;
+        }
+        return super.getBoundingBox(state, source, pos);
+    }
 
     @Override
     public void addCollisionBoxToList(IBlockState state, World world, BlockPos pos, AxisAlignedBB entityBox,

@@ -112,10 +112,11 @@ public class PipeBehaviourEmerald extends PipeBehaviourWood {
     @Override
     public boolean onPipeActivate(EntityPlayer player, RayTraceResult trace, float hitX, float hitY, float hitZ,
         EnumPipePart part) {
-        if (player.isSneaking()) {
+        ItemStack held = player.getHeldItemMainhand();
+        if ((player.isSneaking() && player.isSneaking() && BCTransportConfig.pipeRightClick)
+                || (EntityUtil.getWrenchHand(player) != null && BCTransportConfig.pipeWrench)) {
             return super.onPipeActivate(player, trace, hitX, hitY, hitZ, part);
         }
-        ItemStack held = player.getHeldItemMainhand();
         if (!held.isEmpty()) {
             if (held.getItem() instanceof IItemPluggable) {
                 return false;
@@ -173,7 +174,7 @@ public class PipeBehaviourEmerald extends PipeBehaviourWood {
             } else if (pipe.getFlow() instanceof IFlowFluid) {
                 IFlowFluid flow = (IFlowFluid) pipe.getFlow();
                 int maxMillibuckets = (int) (power / BCTransportConfig.mjPerMillibucket);
-                if (maxMillibuckets > 80) maxMillibuckets = 80;
+                if (maxMillibuckets > 1000) maxMillibuckets = 1000;
                 if (maxMillibuckets > 0) {
                     FluidStack extracted = extractFluid(flow, getCurrentDir(), maxMillibuckets, simulate);
                     if (extracted != null && extracted.amount > 0) {

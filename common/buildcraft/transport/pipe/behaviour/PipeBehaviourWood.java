@@ -82,7 +82,7 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
             if (pipe.getFlow() instanceof IFlowItems) {
                 IFlowItems flow = (IFlowItems) pipe.getFlow();
                 int maxItems = (int) (power / BCTransportConfig.mjPerItem);
-                if (maxItems > 16) maxItems = 16;
+                if (maxItems > BCTransportConfig.maxItemPerTick) maxItems = BCTransportConfig.maxItemPerTick;
                 if (maxItems > 0) {
                     int extracted = extractItems(flow, getCurrentDir(), maxItems, simulate);
                     if (extracted > 0) {
@@ -92,7 +92,7 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
             } else if (pipe.getFlow() instanceof IFlowFluid) {
                 IFlowFluid flow = (IFlowFluid) pipe.getFlow();
                 int maxMillibuckets = (int) (power / BCTransportConfig.mjPerMillibucket);
-                if (maxMillibuckets > 10) maxMillibuckets = 10;
+                if (maxMillibuckets > 1000) maxMillibuckets = 1000;
                 if (maxMillibuckets > 0) {
                     FluidStack extracted = extractFluid(flow, getCurrentDir(), maxMillibuckets, simulate);
                     if (extracted != null && extracted.amount > 0) {

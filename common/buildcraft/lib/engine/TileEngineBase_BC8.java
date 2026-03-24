@@ -12,6 +12,7 @@ import java.util.List;
 import javax.annotation.Nonnull;
 
 import buildcraft.api.mj.*;
+import buildcraft.energy.BCEnergyConfig;
 import buildcraft.energy.EngineStorageWrapper;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
@@ -312,12 +313,15 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
         getPowerStage();
         engineUpdate();
 
+        IMjReceiver receiver = getReceiverToPower(currentDirection);
+        boolean pulsedPower = receiver instanceof IMjRedstoneReceiver || BCEnergyConfig.pulsedPower;
+
         if (progressPart != 0) {
             progress += getPistonSpeed();
 
             if (progress > 0.5 && progressPart == 1) {
                 progressPart = 2;
-                sendPower(); // Comment out for constant power
+                if (pulsedPower) sendPower(); // Comment out for constant power
             } else if (progress >= 1) {
                 progress = 0;
                 progressPart = 0;
@@ -334,9 +338,12 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
         }
 
         // Uncomment for constant power
-        // if (isRedstonePowered && isActive()) {
-        // sendPower();
-        // } else currentOutput = 0;
+        if (!pulsedPower) {
+            if (isRedstonePowered && isActive()) {
+                sendPower();
+            } else currentOutput = 0;
+        }
+
 
         if (!overheat) {
             burn();
@@ -363,7 +370,7 @@ public abstract class TileEngineBase_BC8 extends TileBC_Neptune implements ITick
     private void sendPower() {
         IMjReceiver receiver = getReceiverToPower(currentDirection);
         if (receiver != null) {
-            long extracted = getPowerToExtract(true);
+            long extracted = getPowerToExtract(false);
             if (extracted > 0) {
                 long excess = receiver.receivePower(extracted, false);
                 extractPower(extracted - excess, extracted - excess, true); // Comment out for constant power

@@ -11,7 +11,6 @@ import java.util.Collection;
 import javax.annotation.Nonnull;
 
 import buildcraft.core.compat.module.ic2.IC2VersionHelper;
-import buildcraft.core.compat.module.ic2.exp.ExpIC2Statements;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 

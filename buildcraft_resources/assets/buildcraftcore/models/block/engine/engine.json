@@ -1,0 +1,55 @@
+{
+
+
+  "forge_marker": 1,
+
+
+  "variants": {
+
+
+    "type": {
+
+
+      "wood": {
+
+
+        "model": "buildcraftcore:engine/wood"
+
+
+      },
+
+
+      "stone": {
+
+
+        "model": "buildcraftcore:engine/stone"
+
+
+      },
+
+
+      "iron": {
+
+
+        "model": "buildcraftcore:engine/iron"
+
+
+      },
+
+
+      "creative": {
+
+
+        "model": "buildcraftcore:engine/creative"
+
+
+      }
+
+
+    }
+
+
+  }
+
+
+}

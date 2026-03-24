@@ -9,6 +9,7 @@ package buildcraft.core.compat;
 import java.util.HashMap;
 import java.util.Map;
 
+import buildcraft.core.compat.module.ic2.CompatModuleIndustrialCraft2;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -20,7 +21,6 @@ import buildcraft.api.core.BCLog;
 
 import buildcraft.core.compat.module.crafttweaker.CompatModuleCraftTweaker;
 import buildcraft.core.compat.module.forestry.CompatModuleForestry;
-import buildcraft.core.compat.module.ic2.CompatModuleIndustrialCraft2;
 import buildcraft.core.compat.module.theoneprobe.CompatModuleTheOneProbe;
 import buildcraft.core.compat.network.CompatGui;
 import buildcraft.core.BCCoreConfig;

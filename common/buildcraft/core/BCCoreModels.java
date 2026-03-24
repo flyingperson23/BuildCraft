@@ -75,7 +75,7 @@ public class BCCoreModels {
     @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
         if (BCCoreBlocks.engine != null) {
-            ModelLoader.setCustomStateMapper(BCCoreBlocks.engine, b -> Collections.emptyMap());
+            //ModelLoader.setCustomStateMapper(BCCoreBlocks.engine, b -> Collections.emptyMap());
         }
     }
 

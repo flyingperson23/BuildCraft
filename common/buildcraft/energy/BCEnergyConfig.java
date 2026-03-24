@@ -48,6 +48,7 @@ public class BCEnergyConfig {
     public static double largeOilGenProb;
     public static double heatPerMj;
     public static boolean disableEngineRecipes;
+    public static boolean pulsedPower;
 
     public static final TIntSet excludedDimensions = new TIntHashSet();
     /** If false then {@link #excludedDimensions} should be treated as a whitelist rather than a blacklist. */
@@ -86,6 +87,7 @@ public class BCEnergyConfig {
     private static Property propChristmasEventType;
     private static Property propDisableEngineRecipes;
     private static Property propHeatPerMj;
+    private static Property propPulsedPower;
 
     public static void preInit() {
         EnumRestartRequirement world = EnumRestartRequirement.WORLD;
@@ -126,6 +128,8 @@ public class BCEnergyConfig {
 
         propDisableEngineRecipes = BCCoreConfig.config.get("engine", "disableRecipes", false, "Setting this to true removes combustion engine recipes");
         propHeatPerMj = BCCoreConfig.config.get("engine", "heatPerMj", 0.0023, "How much heat should be generated in engines");
+
+        propPulsedPower = BCCoreConfig.config.get("engine", "pulsedPower", true, "Should engine power be pulsed, not continuous?");
         game.setTo(propEnableOilOceanBiome);
         game.setTo(propEnableOilDesertBiome);
         game.setTo(propEnableOilGeneration);
@@ -141,6 +145,7 @@ public class BCEnergyConfig {
         game.setTo(propLargeSpoutMaxHeight);
         game.setTo(propDisableEngineRecipes);
         game.setTo(propHeatPerMj);
+        game.setTo(propPulsedPower);
 
         String[] _excessive = { //
             BCEnergy.MODID + ":oil_desert", //
@@ -248,6 +253,7 @@ public class BCEnergyConfig {
                 largeOilGenProb = propLargeOilGenProb.getDouble() / 100;
                 disableEngineRecipes = propDisableEngineRecipes.getBoolean();
                 christmasEventStatus = ConfigUtil.parseEnumForConfig(propChristmasEventType, SpecialEventType.DAY_ONLY);
+                pulsedPower = propPulsedPower.getBoolean();
             } else {
                 validateBiomeNames();
             }

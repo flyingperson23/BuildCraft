@@ -1,0 +1,16 @@
+{
+
+
+  "parent":"block/cube_all",
+
+
+  "textures": {
+
+
+    "all": "buildcraftenergy:blocks/engine/iron/back"
+
+
+  }
+
+
+}

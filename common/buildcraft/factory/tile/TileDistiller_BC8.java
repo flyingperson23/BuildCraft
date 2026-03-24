@@ -93,7 +93,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements ITickable, IDeb
 
     private IDistillationRecipe currentRecipe;
     //private long distillPower = 0;
-    private boolean isActive = false;
+    private boolean isActive, hasWork = false;
     private final AverageLong powerAvg = new AverageLong(100);
     private final SafeTimeTracker updateTracker = new SafeTimeTracker(BCCoreConfig.networkUpdateRate, 2);
     private boolean changedSinceNetUpdate = true;
@@ -115,7 +115,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements ITickable, IDeb
 
         caps.addCapabilityInstance(CapUtil.CAP_FLUIDS, io, EnumPipePart.VALUES);
 
-        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> !tankIn.isEmpty(), EnumPipePart.VALUES);
+        caps.addCapabilityInstance(TilesAPI.CAP_HAS_WORK, () -> hasWork, EnumPipePart.VALUES);
         caps.addProvider(new MjCapabilityHelper(new MjBatteryReceiver(mjBattery)));
     }
 
@@ -251,6 +251,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements ITickable, IDeb
             //mjBattery.addPowerChecking(distillPower, false);
             //distillPower = 0;
             isActive = false;
+            hasWork = false;
         } else {
             FluidStack reqIn = currentRecipe.in();
             FluidStack outLiquid = currentRecipe.outLiquid();
@@ -262,6 +263,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements ITickable, IDeb
 
             long stored = mjBattery.getStored();
             if (stored > currentRecipe.powerRequired() && canExtract && canFillLiquid) {
+                hasWork = true;
                 mjBattery.extractPower(currentRecipe.powerRequired());
                 isActive = true;
                 tankIn.drainInternal(reqIn, true);
@@ -269,6 +271,7 @@ public class TileDistiller_BC8 extends TileBC_Neptune implements ITickable, IDeb
                 powerAvg.push(currentRecipe.powerRequired());
             } else {
                 isActive = false;
+                hasWork = false;
                 powerAvg.push(0);
             }
 
