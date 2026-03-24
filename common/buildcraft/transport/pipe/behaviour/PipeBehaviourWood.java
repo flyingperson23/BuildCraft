@@ -78,7 +78,7 @@ public class PipeBehaviourWood extends PipeBehaviourDirectional implements IMjRe
     }
 
     protected long extract(long power, boolean simulate) {
-        if (power > 0) {
+        if (power > 0 && !pipe.getHolder().getPipeWorld().isRemote) {
             if (pipe.getFlow() instanceof IFlowItems) {
                 IFlowItems flow = (IFlowItems) pipe.getFlow();
                 int maxItems = (int) (power / BCTransportConfig.mjPerItem);
